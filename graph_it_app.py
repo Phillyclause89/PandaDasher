@@ -1,6 +1,7 @@
 
 
 if __name__ == '__main__':
+    import os
     import dash
     import pandas as pd
     import datetime as dt
