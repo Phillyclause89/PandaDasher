@@ -1,5 +1,6 @@
 # noinspection SpellCheckingInspection
-"""graph_it: Functions that return dash_core_components.Graph
+"""graph_it.py:
+Functions that return dash_core_components.Graph
 
 TODO:
     * @Noarfang:
