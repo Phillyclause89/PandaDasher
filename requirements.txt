@@ -1,3 +1,2 @@
 dash
 pandas
->=python3.6
