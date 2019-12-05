@@ -39,8 +39,9 @@ DATA_FRAME = pd.DataFrame(
     <a href="https://dash.plot.ly/getting-started">Basic Dash App</a>
 """
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', ]
-server = flask.Flask(__name__)
-application = dash.Dash(__name__, server=server)
+# server = flask.Flask(__name__)
+application = dash.Dash(__name__)
+server = application.server
 # >>> Example call of series_graph_it(...) func
 application.layout = html.Div(
     # ...
