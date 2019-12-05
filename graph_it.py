@@ -61,6 +61,9 @@ LICENSES:
         OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
         OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+DOCS:
+    https://htmlpreview.github.io/?https://github.com/Phillyclause89/PandaDasher/blob/master/html/graph_it.html
+
 """
 
 import dash

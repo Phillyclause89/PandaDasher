@@ -88,6 +88,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </li>
 </ul>
+<h2 id="docs">DOCS</h2>
+<p><a href="https://htmlpreview.github.io/?https://github.com/Phillyclause89/PandaDasher/blob/master/html/graph_it.html">https://htmlpreview.github.io/?https://github.com/Phillyclause89/PandaDasher/blob/master/html/graph_it.html</a></p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -155,6 +157,9 @@ LICENSES:
         OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
         OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+DOCS:
+    https://htmlpreview.github.io/?https://github.com/Phillyclause89/PandaDasher/blob/master/html/graph_it.html
+
 &#34;&#34;&#34;
 
 import dash
@@ -164,7 +169,7 @@ import datetime as dt
 import random
 
 
-def series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+def uni_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
     unq = df[series_column].unique()
     x_df_l = [df[df[series_column] == x] for x in unq]
     data_l = []
@@ -246,7 +251,7 @@ if __name__ == &#39;__main__&#39;:
             html.Div(
                 id=&#34;graph-div&#34;,
                 # ...
-                children=series_graph_it(
+                children=uni_series_graph_it(
                     df=DATA_FRAME,
                     figure_id=&#39;my-graph&#39;,
                     series_column=&#34;brand&#34;,
@@ -265,7 +270,7 @@ if __name__ == &#39;__main__&#39;:
         if n_clicks is None:
             raise PreventUpdate
         else:
-            return series_graph_it(
+            return uni_series_graph_it(
                 df=DATA_FRAME,
                 figure_id=&#39;my-graph&#39;,
                 series_column=&#34;brand&#34;,
@@ -283,8 +288,8 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="graph_it.series_graph_it"><code class="name flex">
-<span>def <span class="ident">series_graph_it</span></span>(<span>df, figure_id, series_column, y_column, height=None, width=None)</span>
+<dt id="graph_it.uni_series_graph_it"><code class="name flex">
+<span>def <span class="ident">uni_series_graph_it</span></span>(<span>df, figure_id, series_column, y_column, height=None, width=None)</span>
 </code></dt>
 <dd>
 <section class="desc"></section>
@@ -292,7 +297,7 @@ if __name__ == &#39;__main__&#39;:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+<pre><code class="python">def uni_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
     unq = df[series_column].unique()
     x_df_l = [df[df[series_column] == x] for x in unq]
     data_l = []
@@ -340,7 +345,7 @@ if __name__ == &#39;__main__&#39;:
 <ul id="index">
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="graph_it.series_graph_it" href="#graph_it.series_graph_it">series_graph_it</a></code></li>
+<li><code><a title="graph_it.uni_series_graph_it" href="#graph_it.uni_series_graph_it">uni_series_graph_it</a></code></li>
 </ul>
 </li>
 </ul>
