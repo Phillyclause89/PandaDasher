@@ -1,5 +1,5 @@
 # noinspection SpellCheckingInspection
-"""graph_it.py:
+"""graph_it:
 Functions that return dash_core_components.Graph
 
 TODO:
