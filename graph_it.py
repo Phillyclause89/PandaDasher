@@ -70,7 +70,7 @@ import datetime as dt
 import random
 
 
-def series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+def uni_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
     unq = df[series_column].unique()
     x_df_l = [df[df[series_column] == x] for x in unq]
     data_l = []
@@ -152,7 +152,7 @@ if __name__ == '__main__':
             html.Div(
                 id="graph-div",
                 # ...
-                children=series_graph_it(
+                children=uni_series_graph_it(
                     df=DATA_FRAME,
                     figure_id='my-graph',
                     series_column="brand",
@@ -171,7 +171,7 @@ if __name__ == '__main__':
         if n_clicks is None:
             raise PreventUpdate
         else:
-            return series_graph_it(
+            return uni_series_graph_it(
                 df=DATA_FRAME,
                 figure_id='my-graph',
                 series_column="brand",
