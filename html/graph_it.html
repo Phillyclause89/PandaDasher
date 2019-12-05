@@ -172,7 +172,110 @@ import datetime as dt
 import random
 
 
-def uni_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+def unq_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+    &#34;&#34;&#34;unq_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+
+    Function for returning a multi series &lt;dash_core_components.Graph object&gt;
+    from a df with the series values in the same column.
+
+    Examples:
+
+        &gt;&gt;&gt;# Example Program:
+        ...from graph_it import unq_series_graph_it
+        ...import dash
+        ...import dash_core_components as dcc
+        ...import dash_html_components as html
+        ...from dash.dependencies import Input, Output
+        ...from dash.exceptions import PreventUpdate
+        ...import pandas as pd
+        ...
+        ...
+        ...if __name__ == &#39;__main__&#39;:
+        ...    &#39;&#39;&#39;DATA_FRAME:
+        ...        Test DF hopefully you can replace it with your own df
+        ...        and the series_graph_it(...) func will work
+        ...        on the use case you described.
+        ...
+        ...    &#39;&#39;&#39;
+        ...    DATA_FRAME = pd.DataFrame(
+        ...        {
+        ...            &#39;date&#39;: [
+        ...                dt.datetime.strptime(
+        ...                    date,
+        ...                    &#34;%m/%d/%Y&#34;
+        ...                ).date() for date in [
+        ...                    &#34;10/24/2019&#34;, &#34;10/24/2019&#34;, &#34;10/25/2019&#34;, &#34;10/25/2019&#34;,
+        ...                    &#34;10/26/2019&#34;, &#34;10/26/2019&#34;, &#34;10/27/2019&#34;, &#34;10/27/2019&#34;,
+        ...                ]
+        ...            ],
+        ...            &#39;name&#39;: [&#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;],
+        ...            &#39;brand&#39;: [&#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;],
+        ...            &#39;retailer&#39;: [&#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;],
+        ...            &#39;price&#39;: [8.99, 6.99, 8.59, 6.50, 9.50, 2.30, 9.50, 0.5],
+        ...            &#39;stars&#39;: [4.5, 4.3, 4.4, 4.0, 4.9, 2.2, 4.8, 1.8],
+        ...            &#39;category&#39;: [&#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;],
+        ...            &#39;highlights&#39;: [&#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;]
+        ...        }
+        ...    ).set_index(&#39;date&#39;)
+        ...    &#39;&#39;&#39;Dash Layout Source:
+        ...        &lt;a href=&#34;https://dash.plot.ly/getting-started&#34;&gt;Basic Dash App&lt;/a&gt;
+        ...    &#39;&#39;&#39;
+        ...    external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;, ]
+        ...    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, )
+        ...    # &gt;&gt;&gt; Example call of series_graph_it(...) func
+        ...    app.layout = html.Div(
+        ...        # ...
+        ...        children=[
+        ...            html.H1(children=&#39;Dashboard Title&#39;),
+        ...            html.Div(children=&#34;Dashboard description text.&#34;),
+        ...            # ...
+        ...            html.Div(
+        ...                id=&#34;graph-div&#34;,
+        ...                # ...
+        ...                children=unq_series_graph_it(
+        ...                    df=DATA_FRAME,
+        ...                    figure_id=&#39;my-graph&#39;,
+        ...                    series_column=&#34;brand&#34;,
+        ...                    y_column=&#34;price&#34;
+        ...                )
+        ...            ),
+        ...        ],
+        ...    )
+        ...
+        ...    # Easter Egg callback
+        ...    @app.callback(
+        ...        Output(component_id=&#39;graph-div&#39;, component_property=&#39;children&#39;),
+        ...        [Input(component_id=&#39;graph-div&#39;, component_property=&#39;n_clicks&#39;)]
+        ...    )
+        ...    def refresh(n_clicks):
+        ...        if n_clicks is None:
+        ...            raise PreventUpdate
+        ...        else:
+        ...            return unq_series_graph_it(
+        ...                df=DATA_FRAME,
+        ...                figure_id=&#39;my-graph&#39;,
+        ...                series_column=&#34;brand&#34;,
+        ...                y_column=&#34;price&#34;
+        ...            )
+        ...
+        ...
+        ...    app.run_server(debug=True)
+        ...
+
+
+
+    Args:
+        df: (pandas.DataFrame) REQUIRED:
+        figure_id: (str) REQUIRED:
+        series_column: (str) REQUIRED:
+        y_column: (str) REQUIRED:
+        height: (int) Optional:
+        width: (int) Optional:
+
+    Returns:
+        (dash_core_components.Graph)
+
+    &#34;&#34;&#34;
     unq = df[series_column].unique()
     x_df_l = [df[df[series_column] == x] for x in unq]
     data_l = []
@@ -254,7 +357,7 @@ if __name__ == &#39;__main__&#39;:
             html.Div(
                 id=&#34;graph-div&#34;,
                 # ...
-                children=uni_series_graph_it(
+                children=unq_series_graph_it(
                     df=DATA_FRAME,
                     figure_id=&#39;my-graph&#39;,
                     series_column=&#34;brand&#34;,
@@ -273,7 +376,7 @@ if __name__ == &#39;__main__&#39;:
         if n_clicks is None:
             raise PreventUpdate
         else:
-            return uni_series_graph_it(
+            return unq_series_graph_it(
                 df=DATA_FRAME,
                 figure_id=&#39;my-graph&#39;,
                 series_column=&#34;brand&#34;,
@@ -291,16 +394,221 @@ if __name__ == &#39;__main__&#39;:
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="graph_it.uni_series_graph_it"><code class="name flex">
-<span>def <span class="ident">uni_series_graph_it</span></span>(<span>df, figure_id, series_column, y_column, height=None, width=None)</span>
+<dt id="graph_it.unq_series_graph_it"><code class="name flex">
+<span>def <span class="ident">unq_series_graph_it</span></span>(<span>df, figure_id, series_column, y_column, height=None, width=None)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>unq_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):</p>
+<p>Function for returning a multi series <dash_core_components.Graph object>
+from a df with the series values in the same column.</p>
+<h2 id="examples">Examples</h2>
+<pre><code>&gt;&gt;&gt;# Example Program:
+...from graph_it import unq_series_graph_it
+...import dash
+...import dash_core_components as dcc
+...import dash_html_components as html
+...from dash.dependencies import Input, Output
+...from dash.exceptions import PreventUpdate
+...import pandas as pd
+...
+...
+...if __name__ == '__main__':
+...    '''DATA_FRAME:
+...        Test DF hopefully you can replace it with your own df
+...        and the series_graph_it(...) func will work
+...        on the use case you described.
+...
+...    '''
+...    DATA_FRAME = pd.DataFrame(
+...        {
+...            'date': [
+...                dt.datetime.strptime(
+...                    date,
+...                    "%m/%d/%Y"
+...                ).date() for date in [
+...                    "10/24/2019", "10/24/2019", "10/25/2019", "10/25/2019",
+...                    "10/26/2019", "10/26/2019", "10/27/2019", "10/27/2019",
+...                ]
+...            ],
+...            'name': ["a", "b", "a", "b", "a", "b", "a", "b"],
+...            'brand': ["a", "b", "a", "b", "a", "b", "a", "b"],
+...            'retailer': ["ra", "ra", "ra", "ra", "ra", "ra", "ra", "ra"],
+...            'price': [8.99, 6.99, 8.59, 6.50, 9.50, 2.30, 9.50, 0.5],
+...            'stars': [4.5, 4.3, 4.4, 4.0, 4.9, 2.2, 4.8, 1.8],
+...            'category': ["ca", "ca", "ca", "ca", "ca", "ca", "ca", "ca"],
+...            'highlights': ["_", "_", "_", "_", "_", "_", "_", "_"]
+...        }
+...    ).set_index('date')
+...    '''Dash Layout Source:
+...        &lt;a href="https://dash.plot.ly/getting-started"&gt;Basic Dash App&lt;/a&gt;
+...    '''
+...    external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', ]
+...    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, )
+...    # &gt;&gt;&gt; Example call of series_graph_it(...) func
+...    app.layout = html.Div(
+...        # ...
+...        children=[
+...            html.H1(children='Dashboard Title'),
+...            html.Div(children="Dashboard description text."),
+...            # ...
+...            html.Div(
+...                id="graph-div",
+...                # ...
+...                children=unq_series_graph_it(
+...                    df=DATA_FRAME,
+...                    figure_id='my-graph',
+...                    series_column="brand",
+...                    y_column="price"
+...                )
+...            ),
+...        ],
+...    )
+...
+...    # Easter Egg callback
+...    @app.callback(
+...        Output(component_id='graph-div', component_property='children'),
+...        [Input(component_id='graph-div', component_property='n_clicks')]
+...    )
+...    def refresh(n_clicks):
+...        if n_clicks is None:
+...            raise PreventUpdate
+...        else:
+...            return unq_series_graph_it(
+...                df=DATA_FRAME,
+...                figure_id='my-graph',
+...                series_column="brand",
+...                y_column="price"
+...            )
+...
+...
+...    app.run_server(debug=True)
+...
+</code></pre>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong></dt>
+<dd>(pandas.DataFrame) REQUIRED:</dd>
+<dt><strong><code>figure_id</code></strong></dt>
+<dd>(str) REQUIRED:</dd>
+<dt><strong><code>series_column</code></strong></dt>
+<dd>(str) REQUIRED:</dd>
+<dt><strong><code>y_column</code></strong></dt>
+<dd>(str) REQUIRED:</dd>
+<dt><strong><code>height</code></strong></dt>
+<dd>(int) Optional:</dd>
+<dt><strong><code>width</code></strong></dt>
+<dd>(int) Optional:</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>(dash_core_components.Graph)</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def uni_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+<pre><code class="python">def unq_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+    &#34;&#34;&#34;unq_series_graph_it(df, figure_id, series_column, y_column, height=None, width=None):
+
+    Function for returning a multi series &lt;dash_core_components.Graph object&gt;
+    from a df with the series values in the same column.
+
+    Examples:
+
+        &gt;&gt;&gt;# Example Program:
+        ...from graph_it import unq_series_graph_it
+        ...import dash
+        ...import dash_core_components as dcc
+        ...import dash_html_components as html
+        ...from dash.dependencies import Input, Output
+        ...from dash.exceptions import PreventUpdate
+        ...import pandas as pd
+        ...
+        ...
+        ...if __name__ == &#39;__main__&#39;:
+        ...    &#39;&#39;&#39;DATA_FRAME:
+        ...        Test DF hopefully you can replace it with your own df
+        ...        and the series_graph_it(...) func will work
+        ...        on the use case you described.
+        ...
+        ...    &#39;&#39;&#39;
+        ...    DATA_FRAME = pd.DataFrame(
+        ...        {
+        ...            &#39;date&#39;: [
+        ...                dt.datetime.strptime(
+        ...                    date,
+        ...                    &#34;%m/%d/%Y&#34;
+        ...                ).date() for date in [
+        ...                    &#34;10/24/2019&#34;, &#34;10/24/2019&#34;, &#34;10/25/2019&#34;, &#34;10/25/2019&#34;,
+        ...                    &#34;10/26/2019&#34;, &#34;10/26/2019&#34;, &#34;10/27/2019&#34;, &#34;10/27/2019&#34;,
+        ...                ]
+        ...            ],
+        ...            &#39;name&#39;: [&#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;],
+        ...            &#39;brand&#39;: [&#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;, &#34;a&#34;, &#34;b&#34;],
+        ...            &#39;retailer&#39;: [&#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;, &#34;ra&#34;],
+        ...            &#39;price&#39;: [8.99, 6.99, 8.59, 6.50, 9.50, 2.30, 9.50, 0.5],
+        ...            &#39;stars&#39;: [4.5, 4.3, 4.4, 4.0, 4.9, 2.2, 4.8, 1.8],
+        ...            &#39;category&#39;: [&#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;, &#34;ca&#34;],
+        ...            &#39;highlights&#39;: [&#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;, &#34;_&#34;]
+        ...        }
+        ...    ).set_index(&#39;date&#39;)
+        ...    &#39;&#39;&#39;Dash Layout Source:
+        ...        &lt;a href=&#34;https://dash.plot.ly/getting-started&#34;&gt;Basic Dash App&lt;/a&gt;
+        ...    &#39;&#39;&#39;
+        ...    external_stylesheets = [&#39;https://codepen.io/chriddyp/pen/bWLwgP.css&#39;, ]
+        ...    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, )
+        ...    # &gt;&gt;&gt; Example call of series_graph_it(...) func
+        ...    app.layout = html.Div(
+        ...        # ...
+        ...        children=[
+        ...            html.H1(children=&#39;Dashboard Title&#39;),
+        ...            html.Div(children=&#34;Dashboard description text.&#34;),
+        ...            # ...
+        ...            html.Div(
+        ...                id=&#34;graph-div&#34;,
+        ...                # ...
+        ...                children=unq_series_graph_it(
+        ...                    df=DATA_FRAME,
+        ...                    figure_id=&#39;my-graph&#39;,
+        ...                    series_column=&#34;brand&#34;,
+        ...                    y_column=&#34;price&#34;
+        ...                )
+        ...            ),
+        ...        ],
+        ...    )
+        ...
+        ...    # Easter Egg callback
+        ...    @app.callback(
+        ...        Output(component_id=&#39;graph-div&#39;, component_property=&#39;children&#39;),
+        ...        [Input(component_id=&#39;graph-div&#39;, component_property=&#39;n_clicks&#39;)]
+        ...    )
+        ...    def refresh(n_clicks):
+        ...        if n_clicks is None:
+        ...            raise PreventUpdate
+        ...        else:
+        ...            return unq_series_graph_it(
+        ...                df=DATA_FRAME,
+        ...                figure_id=&#39;my-graph&#39;,
+        ...                series_column=&#34;brand&#34;,
+        ...                y_column=&#34;price&#34;
+        ...            )
+        ...
+        ...
+        ...    app.run_server(debug=True)
+        ...
+
+
+
+    Args:
+        df: (pandas.DataFrame) REQUIRED:
+        figure_id: (str) REQUIRED:
+        series_column: (str) REQUIRED:
+        y_column: (str) REQUIRED:
+        height: (int) Optional:
+        width: (int) Optional:
+
+    Returns:
+        (dash_core_components.Graph)
+
+    &#34;&#34;&#34;
     unq = df[series_column].unique()
     x_df_l = [df[df[series_column] == x] for x in unq]
     data_l = []
@@ -348,7 +656,7 @@ if __name__ == &#39;__main__&#39;:
 <ul id="index">
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="graph_it.uni_series_graph_it" href="#graph_it.uni_series_graph_it">uni_series_graph_it</a></code></li>
+<li><code><a title="graph_it.unq_series_graph_it" href="#graph_it.unq_series_graph_it">unq_series_graph_it</a></code></li>
 </ul>
 </li>
 </ul>
