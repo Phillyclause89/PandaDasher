@@ -188,3 +188,6 @@ tags
 # Persistent undo
 [._]*.un~
 
+venv
+*.pyc
+.DS_Store
