@@ -31,7 +31,7 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest test_unq_series_graph_it.py
+        pytest
     - name: pypi-publish
       uses: pypa/gh-action-pypi-publish@v1.0.0a0
       with:
