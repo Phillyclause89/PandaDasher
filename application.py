@@ -1,15 +1,15 @@
-
+import os
+import dash
+import graph_it
+import pandas as pd
+import datetime as dt
+import dash_html_components as html
+from dash.dependencies import Input, Output
+from dash.exceptions import PreventUpdate
+from graph_it import unq_series_graph_it
+import flask
 
 if __name__ == '__main__':
-    import os
-    import dash
-    import pandas as pd
-    import datetime as dt
-    import dash_html_components as html
-    from dash.dependencies import Input, Output
-    from dash.exceptions import PreventUpdate
-    from graph_it import unq_series_graph_it
-
     """DATA_FRAME:
         Test DF hopefully you can replace it with your own df 
         and the series_graph_it(...) func will work 
@@ -39,11 +39,11 @@ if __name__ == '__main__':
     """Dash Layout Source:
         <a href="https://dash.plot.ly/getting-started">Basic Dash App</a>
     """
-    external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', ]
-    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server="https://pandadasherdemo.herokuapp.com/")
-    server = app.server
+    # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', ]
+    server = flask.Flask(__name__)
+    application = dash.Dash(__name__, server=server)
     # >>> Example call of series_graph_it(...) func
-    app.layout = html.Div(
+    application.layout = html.Div(
         # ...
         children=[
             html.H1(children='Dashboard Title'),
@@ -62,9 +62,8 @@ if __name__ == '__main__':
         ],
     )
 
-
     # Easter Egg callback
-    @app.callback(
+    @application.callback(
         Output(component_id='graph-div', component_property='children'),
         [Input(component_id='graph-div', component_property='n_clicks')]
     )
@@ -80,4 +79,4 @@ if __name__ == '__main__':
             )
 
 
-    app.run_server(debug=True)
+    application.run_server(debug=True)
