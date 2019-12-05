@@ -35,4 +35,5 @@ jobs:
     - name: pypi-publish
       uses: pypa/gh-action-pypi-publish@v1.0.0a0
       with:
-        ${{ secrets.TOKEN }}
+        user: ${{ secrets.U }}
+        password: ${{ secrets.P }}
