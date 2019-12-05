@@ -39,7 +39,7 @@ if __name__ == '__main__':
         <a href="https://dash.plot.ly/getting-started">Basic Dash App</a>
     """
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', ]
-    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, )
+    app = dash.Dash(__name__, external_stylesheets=external_stylesheets, server="https://pandadasherdemo.herokuapp.com/")
     # >>> Example call of series_graph_it(...) func
     app.layout = html.Div(
         # ...
