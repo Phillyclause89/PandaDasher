@@ -31,4 +31,4 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest graph_it.py
+        pytest test_unq_series_graph_it.py
