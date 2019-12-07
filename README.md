@@ -1,5 +1,5 @@
 # PandaDasher
-PandaDasher is a lib of my Pandas dependent Dash functions 
+PandaDasher is a lib of my Pandas and Dash dependent Python
 
 # PandaDasher code in action
 [graph_it running on heroku](https://graph-it-demo-app.herokuapp.com/)
