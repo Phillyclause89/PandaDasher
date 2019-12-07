@@ -1,4 +1,0 @@
-flask
-dash
-dash_core_components
-pandas
