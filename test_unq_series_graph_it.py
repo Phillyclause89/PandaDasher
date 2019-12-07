@@ -9,8 +9,8 @@ import dash_html_components as html
 
 
 class TestUnq_series_graph_it(TestCase):
-    def test_unq_series_graph_it(self):
-        data_frame = pd.DataFrame(
+    def setUp(self) -> None:
+        self.valid_ts_df = pd.DataFrame(
             {
                 'date': [
                     dt.datetime.strptime(
@@ -30,21 +30,27 @@ class TestUnq_series_graph_it(TestCase):
                 'highlights': ["_", "_", "_", "_", "_", "_", "_", "_"]
             }
         ).set_index('date')
-        g = graph_it.unq_series_graph_it(
-            df=data_frame,
-            figure_id='my-graph',
-            series_column="brand",
-            y_column="price"
+        self.figure_id = 'test_graph'
+        self.series_column = "brand"
+        self.y_column = "price"
+
+    def tearDown(self) -> None:
+        pass
+
+    def test_unq_series_graph_it(self):
+        g_default = graph_it.unq_series_graph_it(
+            df=self.valid_ts_df,
+            figure_id=self.figure_id,
+            series_column=self.series_column,
+            y_column=self.y_column,
         )
         base_graph_type = type(dcc.Graph())
-        self.assertIsInstance(g, base_graph_type)
-        self.assertEqual(g.id, 'my-graph')
+        self.assertIsInstance(g_default, base_graph_type)
+        self.assertEqual(g_default.id, self.figure_id)
+        self.assertEqual(g_default.style, {'height': None, 'width': None})
         app = dash.Dash()
-        app.layout = html.Div(children=g)
+        app.layout = html.Div(children=g_default)
         self.assertIsInstance(app.layout.children, base_graph_type)
-        print("\n", type(app.layout.children))
-
-        # self.assertEqual()
 
 
 if __name__ == "__main__":
