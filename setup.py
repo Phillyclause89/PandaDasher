@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pandadasher',
-    version='00.00.01',
+    version='00.00.02',
     packages=['graph_it'],
     url='https://github.com/Phillyclause89/PandaDasher',
     license='MIT',
