@@ -191,3 +191,9 @@ tags
 venv
 *.pyc
 .DS_Store
+depl.zip
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
